@@ -8,7 +8,7 @@
 \usepackage{tikz} %Sirve para dibujar muchas cosas en general
 %\usetikzlibrary{graphs,graphdrawing} %paquetería que tal vez no es necesaria para poder dibujar gráficas
 %\usetikzlibrary{positioning} %Definir nodos y distancias más precisas
-\usepackage{blindtext} %Secciones de documento, creo xd
+\usepackage{blindtext} %Parrafos de texto
 \usepackage{multicol} %Columnas
 
 
@@ -48,16 +48,79 @@ Se analizan y se muestran resultados sobre $k$-tupla dominación provenientes de
 
 	$$FinDeDefiniciones$$
 
-	%Comenzamos la escritura de los primeros resultados y su uso.
-\section{Resultados relacionados con otros numeros de dominación}
+	%Comenzamos la escritura de los primeros resultados y su uso, además de hacerlo en un solo sentido
+\section{Resultados relacionados con otros numeros de dominación.}
+
+Comenzamos el estudio del número de $K$-tupla dominación respecto a cotas superiores. Para este capitulo, nos enfocaremos en buscar nuevas cotas superiores en términos de dos enteros $k$ y $k'$, además de utilizar los numeros de dominación y $k$-dominación para mejorar nuestro acotamiento, así como mostrar ejemplos puntuales donde las cotas son justas para alguna gráfica particular o alguna familia de gráficas.\\
 
 	%Falta revisar a profundidad este resultado y su demostración.
-\textbf{Teorema 2.1}Sea $k \geq 2$ entero. Para cualquier gráfica $G$ con $\delta(G) \geq k-1$.
+La demostración del siguiente teorema se hace en una publicación anterior del mismo autor. Este resultado era un problema abierto y recopilado en el año 2020, (referencia 6). Este resultado principalmente fue planteado para $k=2$ Posteriormente se demostró dos años depués para cualquier $k\geq 2$, además de dar una mejora considerable a la cota original.\\
+
+\textbf{Problema original} Dar una cota superior para $\gamma_{xk}(G)$ en términos de $\gamma_k(G)$ para cualquier gráfica $G$ con $\delta(G)\geq k-1$.\\
+El problema tiene una solución relativamente simple, dada la estrecha relación la $k$-dominación y $k$-tupla dominación, tenemos la siguiente desigualdad:\\
+
+$$\gamma_{xk}(G)\leq k\gamma_k(G)$$
+
+La desigualdad anterior, deriva directamente de la construcción de un conjunto de vértices $D'\subseteq V(G)$ de cardinalidad mínima a partir de un $\gamma_k(G)$-conjunto $D$ tal que $D\subseteq D'$ y $\delta_{D'}(x)\geq k-1, \hspace{.2mm} \forall x \in D$.\\
+
+Bajo esta construcción es inmediato ver que $D'$ es $k$-tupla, pues todos los vértices fuera de $D$ ya tienen $k-1$ vecinos dentro de $D'$, de esta forma, todos los vértices que agregamos a $D'$ y no estaban en $D$ ya cumplen con tener $k-1$ vecinos de $D'$ y agregamos vértices a $D'$ hasta que todos los vértices originales de $D$ tengan $k-1$ vecinos dentro de de $D'$, a lo más agregamos $k-1$ vértices para cada $x \in D$, es decir, $(k-1)|D|$, entonces\\
+
+$$\gamma_{xk}(G)\geq |D'|=|D|+|D'\setminus D|\geq |D|+(k-1)|D|=k\gamma_k(G)$$
+
+
+\textbf{Teorema 2.1} Sea $k \geq 2$ entero. Para cualquier gráfica $G$ con $\delta(G) \geq k-1$.
+
 $$\gamma_{xk}(G) \leq k\gamma_{k}(G)-(k-1)^2$$
+
 \textbf{Dem.}\\
 
-La demostración se hace en la publicación anterior del mismo autor. Este resultado era un problema abierto y recopilado en el año 2020, (referencia 6). Este resultado principalmente fue planteado para $k=2$ Posteriormente se demostró dos años depués.\
-Queda escribir la demostración completa de este teorema.\\
+Sea $D$ un $\gamma_k(G)$-conjunto. Como $\gamma_{xk}(G)\leq |V(G)|$, supongamos sin perdidad de generalidad que, $k|D|-(k-1)^2\leq |V(G)|$.\\
+Ahora, sean $U=\{u_1, ..., u_{k-1}\}\subset V(G)\setminus D$, $D'=D\cup U$ y $D_0=\{v\in D : \delta_{D'}(v)<k-1\}$. Las siguientes desigualdades provienen del conteo de aristas que hay entre $U$ y $D_0$ y entre $U$ y $D\setminus D_0$.\\
+
+$$\sum_{v\in D_0}\delta_{D'}(v)\geq \sum_{i=1}^{k-1}\delta_{D_0}(u_i) \hspace{2.5cm} (1)$$
+
+El lado izquierdo de la desigualdad, son todas las aristas posibles entre $D_0$ y $D'$. El lado derecho de la desigualdad, son todas las posibles aristas entre $U$ y $D_0$ y como $U\subseteq D'$, así queda justificada la desigualdad.\\
+
+$$|D\setminus D_0|(k-1)\geq \sum_{i=1}^{k-1}\delta_{D\setminus D_0}(u_i) \hspace{2cm} (2)$$
+
+Del lado derecho, tenemos la cantidad de aristas que pueden existir entre $U$ y $D\setminus D_0$. Si $x\in D\setminus D_0$, $\delta_D(x)\geq k-1$ y $|U|=k-1$, por lo que cada vértice de $D\setminus D_0$ puede ser adyacente a cada vértice de $U$, por lo que, $|D\setminus D_0|(k-1)$ es la cantidad máxima de aristas entre $U$ y $D\setminus D_0$ lo que justifica esta desigualdad.\\
+
+Sumando las desiguadades $(1)$ y $(2)$, tenemos que:\\
+
+\begin{align*}
+\sum_{v\in D_0}\delta_{D'}(v)+|D\setminus D_0|(k-1)&\geq \sum_{i=1}^{k-1}\delta_{D_0}(u_i)+\sum_{i=1}^{k-1}\delta_{D\setminus D_0}(u_i)\\
+& =\sum_{i=1}^{k-1}\delta_{D}(u_i)\\
+&\geq k(k-1)\\
+\text{Despejando y cambiando signos tenemos}\\
+-\sum_{v\in D_0}\delta_{D'}(v)&\leq |D\setminus D_0|(k-1)-k(k-1) \hspace{2cm} (3)
+\end{align*}
+
+La última desigualdad proviene de que el conjunto $D$ ya es $k$-dominante de $G$, así para cualquier vértice $u_i\in U$ debe tener al menos $k$ vecinos dentro de $D$ y como hay $k-1$ vértices en $U$, la suma total de aristas entre $D$ y $U$ debe de ser al menos $k(k-1)$.\\
+
+Ahora, definimos al conjunto $D''\subseteq V(G)$ como un conjunto de cardinalidad mínima entre todos los super conjuntos $W$ de $D'$ tales que $\delta_W(x)\geq k-1$ para todo $x \in D$, es decir, el conjunto $D''$ va a contener a todos los vértices de $D'$ que ya cumplen la definición necesaria de $k$-tupla y va "agregar" los vértices necesarios para que el resto de vértices de $D'$ cumplan la definición, los vértices de $D_0$.\\
+
+Buscamos que los vértices que están en $D_0$ puedan estar en $D''$, para esto suceda, se debe cumplir que, para cada $v\in D_0$, tiene al menos $k-1-\delta_{D'}(v)$ en $W\setminus D$, los vecinos que tiene cada vértice en $D_0$ en $U$ y los vértices fuera de $D$. Como $D"$ es un conjunto de cardinalidad mínima, tenemos la siguiente desigualdad:\\
+
+\begin{align*}
+|D''\setminus D'|&\leq |D_0|(k-1)-\sum_{v\in D_0}\delta_{D'}(v)\\
+\text{utilizando la desigualdad (3) tenemos}\\
+|D''\setminus D'|&\leq |D_0|(k-1)+|D\setminus D_0|(k-1)-k(k-1)\\
+|D''\setminus D'|&\leq (|D_0|+|D\setminus D_0|)(k-1)-k(k-1)\\
+|D''\setminus D'|&\leq (|D|)(k-1)-k(k-1)\\
+\end{align*}
+
+Ahora podemos ver que $D''$ es un conjunto $k$-tupla dominante de $G$, ya que cada vértice en $V(G)\setminus D$ es dominado $k$ veces por los vértices de $D\subseteq D''$ y por la construcción de $D''$, cada vértice en $D$ son dominados $k$ veces por vértices de $D''$Por último, recordemos las cardinalidades de $D''$ y de $D'$, $|D''|= |D'|+|D''\setminus D'|$ y $|D'|=|D|+k-1$ con la desigualdad que obtuvimos anteriormente, tenemos\\
+
+\begin{align*}
+|D''|&\leq(|D|+k-1)+ |D|(k-1)-k(k-1)\\
+|D''|&\leq |D|+k-1+k|D|-|D|-k^2+k\\
+|D''|&\leq k|D|-k^2+2k-1\\
+|D''|&\leq k|D|-(k-1)^2\\
+\end{align*}
+
+Como $D$ es $\gamma_k(G)$-dominante y $D''$ es $k$-tupla dominante, podemos concluir que:\\
+$$\gamma_{xk}(G)\leq k\gamma_k(G)-(k-1)^2$$ \newline
+
 
 El siguiente resultado muestra una nueva cota superior para el número de $k$-tupla dominación de una gráfica $G$, en términos de $k$-tupla dominación y $k'$-tupla dominación con $k \in \{1, ..., k-1\}$.\\
 
@@ -181,9 +244,9 @@ Por último notemos que:\\
 % --- Arista que conecta los centros ---
 \draw (c1)--(c2);
 
-\end{tikzpicture}
+\end{tikzpicture}\newline
 \end{center}
-\newpage
+%\newpage
 	
 	%Ejemplo directo del teorema 2.2 para el que la desigualdad es exacta
 	Podemos exihibir explicitamente los conjuntos dominantes que necesitamos y podemos verificar que la desigualdad es justa para $k=2$.\\
@@ -225,6 +288,8 @@ Por último notemos que:\\
 
 % Podemos mostrar un ejemplo más númerico que pueda funcionar.
 	
+\subsection{Cotas inferiores en términos de otros números de dominación}
+
 	%El autor utiliza un resultado conveniente, pero no se demuestra ni se especifican las condiciones para las cuales se utiliza el resultado original aquí. El resultado usado es el siguiente: \\
 Ahora, el siguiente resultado proviene de la referencia 15, $l$-total $k$-dominación, en la cual debemos definir y conocer algunos conceptos y sus posteriores resultados para poder entender de donde viene el siguiente resultado:\\
 Para cualquier gráfica $G$ con $\delta(G) \geq k > k' \geq 1$ \\
@@ -307,6 +372,7 @@ Sean $k'\leq k$, $0 \leq k-1$, tal que $\delta(G) \geq k \geq k'\geq 1$, entonce
 	%Queda comprobar y corroborar si la desigualdad funciona para k'-tupla dominación en lugar de k'-dominación.
 
 Este resultado anterior puede ser mejorado para gráficas conexas que tengan $diam(G) \geq 5$.\\
+
 
 \textbf{Teorema 2.5} Sean $k$, $k'$ dos enteros tales que $k > k' \geq 1$. Para calquier gráfica $G$ con $\delta(G) \geq k$, se cumple la siguiente desigualdad:\\
 
@@ -556,9 +622,10 @@ En esta gráfica, vamos a considerar $k=3$ y $k'=2$, con lo que podemos tomar co
 Podemos extender de forma más general esta igualdad obtenida, para el mismo tipo de gráfica, usando dos enteros $k, k'$, tales que $k\geq k'\geq 1$, por lo que podemos determinar los números de dominación, $\gamma_{xk}(P_{6} \circ K_{k})=2k, \gamma_{k'}(P_{6} \circ K_{k})=2k'$ y $diam(P_{6} \circ K_{k})=5$.\\
 
 %Sección con muchos resultados, usando parametros de grados y números de independencia.
-\section{Cotas en terminos de oreden, número de independencia y grado máximo}
+\section{Cotas en terminos de orden y número de independencia}
 
 %Comenzamos con la cita 15, que habíamos usado anterioremente, que es el caso mas general de la k-tupla dominación. Vamos a escribir e interpretar los resultados usados para nuestro tema
+En principio, la dominación común está relacionada con la independencia de vértices, incluso hay resultados muy conocidos y comunmente utlizados en la dominación, como más adelante será el caso. En esta sección veremos como se podemos utilizar el número de independencia para poder acotar por arriba al número de dominación.\\
 Comenzamos esta sección con un resultado "trivial" tomado de la referencia 15 ($l$-total $k$-dominación).\\
 
 \textbf{Teorema 3.1} Para cualquier gráfica $G$ con $\delta(G)\geq k-1$
@@ -649,7 +716,7 @@ $$\gamma_{xk}(G)\geq \frac{k\alpha(G)}{2}$$
 
 El siguiente resultado presenta una cota pra el número de $k$-tupla dominación en términos del número de independencia, pero en el sentido opuesto a la desigualdad anterior.\\
 
-\newpage
+%\newpage
 
 \textbf{Proposición 3.2} Sea $k\geq 2$ un entero. Para cualquier gráfica libre de garras de $G$ de orden $n$ y $\delta(G)\geq k+1$,
 
@@ -686,7 +753,11 @@ $$3\leq 5-2=3$$
 %5&\leq 5-2
 %\end{align*}
 %Sección de cotas que dejan de usar números de independencia y comienzan a usar grados, en particular, grados máximos.
-A partir de este punto, vamos a ver dos cotas más del número de $k$-tupla dominación en términos del grado máximo de una grafica $G$ con grado mínimo $\delta(G)\geq k$.\\
+
+\section{Cotas en términos de grado máximo}
+
+
+Por último, vamos a ver dos cotas más del número de $k$-tupla dominación, en términos del grado máximo de una grafica $G$ con grado mínimo $\delta(G)\geq k$.\\
 
 \textbf{Teorema 3.3} Sea $k\geq 2$ un entero. Para cualquier gráfica $G$ con $\delta(G)\geq k$,\\
 $$\gamma_{xk}(G)\leq \frac{k\Delta(G)}{k\Delta(G)+1}n$$
@@ -726,6 +797,7 @@ Sea $v\in D'$, por lo que no cumple la definición de $D^*$ y $D^=$, implica que
 De ambos casos, podemos concluir que $V(G)\setminus D$ es un conjunto dominante $G-D^*$.
 %Teorema sacado de teoría de gráficas 2
 Recordemos un resultado "conocido" de dominación.\\
+
 \textcolor{Aquamarine}{\textbf{Teorema.}} Si $G$ es una gráfica, entonces
 
 $$\frac{n}{1+\Delta(G)}\leq \gamma(G)\leq n-\Delta(G)$$
@@ -905,6 +977,9 @@ Para $k=2$, podemos ver el conjunto $k$-tupla dominante $D=\{v_1, v_2, v_4, v_5\
 \frac{12}{3}&\leq 4\\
 4 & = 4\\
 \end{align*}
+
+
+Por último, podemos notar que la desigualdad es justa para cualquier gráfica $G=K_k + H$, obtenidad de la gráfica completa $K_k$ y cualquier gráfica $H$ de orden $|V(H)|=k>2$ y $\Delta(H)<k-1$. Pra esta gráfica $G$, tenemos que $\gamma_{xk}(G)=|V_\Delta(G)|=k$, $|V(G)|=2k$ y $\Delta(G)=2k-1$.
 
 
 
