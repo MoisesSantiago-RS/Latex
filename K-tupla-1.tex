@@ -1,15 +1,20 @@
 \documentclass{article}
+\usepackage[spanish]{babel}
+\decimalpoint
 \usepackage{comment} %Comentarios
 \usepackage{listings} %Codigo
 \usepackage[dvipsnames]{xcolor} %Paquete de colores en Latex
 \usepackage{amsmath} 
 \usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{amsfonts} %Simbolos exclusivos, como los simbolos de campos
 \usepackage{tikz} %Sirve para dibujar muchas cosas en general
 %\usetikzlibrary{graphs,graphdrawing} %paquetería que tal vez no es necesaria para poder dibujar gráficas
 %\usetikzlibrary{positioning} %Definir nodos y distancias más precisas
 \usepackage{blindtext} %Parrafos de texto
 \usepackage{multicol} %Columnas
+
+\usetikzlibrary{shapes.geometric}
 
 
 \title{Algunos resultados de K-tupla dominación}
@@ -56,17 +61,27 @@ Comenzamos el estudio del número de $K$-tupla dominación respecto a cotas supe
 	%Falta revisar a profundidad este resultado y su demostración.
 La demostración del siguiente teorema se hace en una publicación anterior del mismo autor. Este resultado era un problema abierto y recopilado en el año 2020, (referencia 6). Este resultado principalmente fue planteado para $k=2$ Posteriormente se demostró dos años depués para cualquier $k\geq 2$, además de dar una mejora considerable a la cota original.\\
 
-\textbf{Problema original} Dar una cota superior para $\gamma_{xk}(G)$ en términos de $\gamma_k(G)$ para cualquier gráfica $G$ con $\delta(G)\geq k-1$.\\
-El problema tiene una solución relativamente simple, dada la estrecha relación la $k$-dominación y $k$-tupla dominación, tenemos la siguiente desigualdad:\\
+\textbf{Problema} Dar una cota superior para $\gamma_{xk}(G)$ en términos de $\gamma_k(G)$ para cualquier gráfica $G$ con $\delta(G)\geq k-1$.\\
+
+El problema tiene una solución relativamente simple, dada la relación de la $k$-dominación y la $k$-tupla dominación, tenemos la siguiente desigualdad:\\
 
 $$\gamma_{xk}(G)\leq k\gamma_k(G)$$
 
-La desigualdad anterior, deriva directamente de la construcción de un conjunto de vértices $D'\subseteq V(G)$ de cardinalidad mínima a partir de un $\gamma_k(G)$-conjunto $D$ tal que $D\subseteq D'$ y $\delta_{D'}(x)\geq k-1, \hspace{.2mm} \forall x \in D$.\\
+Probemos que esta desigualdad se cumple.\\
+Sea $D$ un $\gamma_k$-conjunto y definimos al conjunto $D'\subseteq V(G)$ tal que $D\subseteq D'$ y $\delta_{D'}(x) \geq k-1$ para toda $x\in D$. Como $D$ es un conjunto $k$-dominante, $\forall x \in (V(G)\setminus D)$, $\delta_{D'}(x)\geq k$ y por la definición del conjunto $D'$, $\forall v\in D$, $\delta_{D'}(v)\geq k-1$, por lo que, $D'$ es un conjunto $k$-tupla dominante de $G$.\\
 
-Bajo esta construcción es inmediato ver que $D'$ es $k$-tupla, pues todos los vértices fuera de $D$ ya tienen $k-1$ vecinos dentro de $D'$, de esta forma, todos los vértices que agregamos a $D'$ y no estaban en $D$ ya cumplen con tener $k-1$ vecinos de $D'$ y agregamos vértices a $D'$ hasta que todos los vértices originales de $D$ tengan $k-1$ vecinos dentro de de $D'$, a lo más agregamos $k-1$ vértices para cada $x \in D$, es decir, $(k-1)|D|$, entonces\\
 
-$$\gamma_{xk}(G)\geq |D'|=|D|+|D'\setminus D|\geq |D|+(k-1)|D|=k\gamma_k(G)$$
+Por último, por la construcción del conjunto $D'$, a lo más, se agregaron $k-1$ vértices más al conjunto $D$ para cada vértice del mismo, es decir, a lo más se agregaron $(k-1)|D|$ vértices, por lo que, $|D'|=|D|+|D'\setminus D|$. Entonces:
 
+\begin{align*}
+\gamma_{xk}(G)&\leq |D'|\\
+&\leq |D|+|D'\setminus D|\\
+&\leq |D|+(k-1)|D|\\
+\Longrightarrow \gamma_{xk}(G)&\leq k\gamma_k(G)
+\end{align*}
+
+
+Ya que se resolvió el problema anterior y se otorgó una justificación a la misma, posterioremente podemos hacer un refinamiento de la desigualdad anteior, haciendolo mejorar en al menos 1. El refinamiento mencionado se cita y se demuestra en el siguiente teorema.\\
 
 \textbf{Teorema 2.1} Sea $k \geq 2$ entero. Para cualquier gráfica $G$ con $\delta(G) \geq k-1$.
 
@@ -74,52 +89,176 @@ $$\gamma_{xk}(G) \leq k\gamma_{k}(G)-(k-1)^2$$
 
 \textbf{Dem.}\\
 
-Sea $D$ un $\gamma_k(G)$-conjunto. Como $\gamma_{xk}(G)\leq |V(G)|$, supongamos sin perdidad de generalidad que, $k|D|-(k-1)^2\leq |V(G)|$.\\
-Ahora, sean $U=\{u_1, ..., u_{k-1}\}\subset V(G)\setminus D$, $D'=D\cup U$ y $D_0=\{v\in D : \delta_{D'}(v)<k-1\}$. Las siguientes desigualdades provienen del conteo de aristas que hay entre $U$ y $D_0$ y entre $U$ y $D\setminus D_0$.\\
+Sea $D$ un $\gamma_k(G)$-conjunto. Sabemos que $\gamma_{xk}(G)\leq |V(G)|$ y además, tenemos que considerar dos casos. El primer caso es cuando $k|D|-(k-1)^2\ > |V(G)|$, lo que termina la prueba en este caso. El segundo caso  es cuando $k|D|-(k-1)^2\leq |V(G)|$, que será el caso qeu supondremos para el resto de la demostración.\\
+
+Como $D$ es un conjunto $k$-dominante, sabemos que $|D|\geq k$, de lo que podemos deducir los iguiente:\\
+
+%Se demuestra la existencia del conjunto U
+\begin{align*}
+|D|&\geq k\\
+\Longrightarrow |D|-1 &\geq k-1\\
+\Longrightarrow (k-1)(|D|-1) &\geq (k-1)^2\\
+\Longrightarrow (k-1)|D|-(k-1) &\geq (k-1)^2\\
+\Longrightarrow (k-1)|D|-(k-1)^2 &\geq k-1\\
+\Longrightarrow k|D|-(k-1)^2 -|D|&\geq k-1\\
+\Longrightarrow V(G)-|D|&\geq k|D|-(k-1)^2 -|D|\\
+\Longrightarrow V(G)-|D|&\geq k-1
+\end{align*}
+\newline
+Ahora, como vimos anteriormente, podemos encontrar al menos $k-1$ vértices fuera del conjunto, por lo que podemos definir los siguientes conjuntos. Sean $U=\{u_1, ..., u_{k-1}\}\subset V(G)\setminus D$, $D'=D\cup U$ y $D_0=\{v\in D : \delta_{D'}(v)<k-1\}$. \\
+Una vez definidos los conjuntos anteriores, podemos deducir las siguientes desigualdades, las cuales provienen del conteo de aristas, la primera entre los conjuntos $U$ y $D_0$ y la segunda desigualdad de los conjuntos $U$ y $D\setminus D_0$.\\
+
+\begin{figure}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % --- DIAGRAMA SUPERIOR ---
+    % Elipses principales D y U
+    \draw (0,0) ellipse (1cm and 1.8cm) node[above=2.1cm] {$D$};
+    \draw (3.5,0) ellipse (0.8cm and 1.8cm) node[above=2.1cm] {$U$};
+
+    %Nodos en U
+    \filldraw (3.3,0.85) circle (2pt) node (p8) {};
+    \filldraw (3.6,0.85) node (p81) {$u_1$};
+
+    %Nodos de densidad
+    %\filldraw (3.3,0.25) circle (0.3pt) node (p9) {};
+    %\filldraw (3.3,0.05) circle (0.3pt) node (p10) {};
+    %\filldraw (3.3,-0.15) circle (0.3pt) node (p11) {};
+
+
+    \filldraw (3.3,-0.65) circle (2pt) node (p12) [above=0.55cm]{$\vdots$};
+    \filldraw (3.7,-0.65) node (p121) {$u_{k-1}$};
+
+
+    
+    %	Nodos en D
+    \filldraw (0.2,1.2) circle (2pt) node (p7) {};
+
+    %Nodos de densidad (pequeños)
+   % \filldraw (0,1.2) circle (0.3pt) node (p6) {};
+    %\filldraw (-0.15,1.2) circle (0.3pt) node (p5) {};
+    %\filldraw (-0.3,1.2) circle (0.3pt) node (p4) {};
+    
+    \filldraw (-0.5,1.2) circle (2pt) node (p3) [right]{$\; \dots$};
+
+
+    % Subconjunto D_0 dentro de D
+    \draw (0,-0.6) ellipse (0.6cm and 1cm) node[above=0.5cm, left=0.1cm] {$D_0$};
+    
+    % Punto dentro de D_0
+    \filldraw (0.2,-0.5) circle (2pt) node (p1) {};
+    
+    % aristas azules (D_0 - U)
+    \draw[Aquamarine] (p1) -- (3.2, 0.8);
+    \draw[Aquamarine] (p1) -- (3.2, 0);
+    \draw[Aquamarine] (p1) -- (3.2, -0.6);
+
+    % aristas azules (D - D_0)
+    \draw[BurntOrange] (p1) -- (0.2, 1);
+    \draw[BurntOrange] (p1) -- (0, 1);
+    \draw[BurntOrange] (p1) -- (-0.2, 1);
+    \draw[BurntOrange] (p1) -- (-0.4, 1);
+
+    % aristas verdes (D - U)
+    \draw[LimeGreen] (p7) -- (3.2, 0.8);
+    \draw[LimeGreen] (p7) -- (3.2, 0);
+    \draw[LimeGreen] (p7) -- (3.2, -0.6);
+    
+
+    % --- SEPARACIÓN ---
+   % \begin{scope}[yshift=-5.5cm]
+    
+    % --- DIAGRAMA INFERIOR ---
+    % Elipses principales X e Y
+    %\draw (0,0) ellipse (1cm and 1.8cm) node[above=1.8cm] {$X$};
+    %\draw (3.5,0) ellipse (1cm and 1.8cm) node[above=1.8cm] {$Y$};
+    
+    % Subconjunto N(S) dentro de Y
+    %\draw (3.5,-0.5) ellipse (0.6cm and 0.8cm) node[above=0.4cm] {$N(S)$};
+    
+    % Punto dentro de N(S)
+    %\filldraw (3.3,-0.7) circle (2pt) node (p2) {};
+    
+    % Líneas azules (aristas)
+    %\draw[blue!70!black] (p2) -- (0.5, 0.6);
+    %\draw[blue!70!black] (p2) -- (0.7, -0.1);
+    %\draw[blue!70!black] (p2) -- (0.5, -0.8);
+    
+    %\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\caption{Conjuntos de vértices definidos en la gráfica $G$ y las posibles aristas entre los mismos}
+    \label{fig:grafica_1}
+\end{figure}
+
 
 $$\sum_{v\in D_0}\delta_{D'}(v)\geq \sum_{i=1}^{k-1}\delta_{D_0}(u_i) \hspace{2.5cm} (1)$$
+\newline
 
-El lado izquierdo de la desigualdad, son todas las aristas posibles entre $D_0$ y $D'$. El lado derecho de la desigualdad, son todas las posibles aristas entre $U$ y $D_0$ y como $U\subseteq D'$, así queda justificada la desigualdad.\\
+El lado izquierdo de la desigualdad, son todas las aristas posibles entre los vértices del conjunto $D_0$ y el conjunto $D'$, apoyandonos de la Figura 1, son las aristas verdes y las aristas azules. El lado derecho de la desigualdad, son todas las posibles aristas entre los vértices de $U$ y los vértices de $D_0$, una vez más, apoyandonos de la Figura 1, son las aristas de color azul. Además, sabemos que $U\subseteq D'$, lo que justifica la desigualdad\\
+
 
 $$|D\setminus D_0|(k-1)\geq \sum_{i=1}^{k-1}\delta_{D\setminus D_0}(u_i) \hspace{2cm} (2)$$
 
-Del lado derecho, tenemos la cantidad de aristas que pueden existir entre $U$ y $D\setminus D_0$. Si $x\in D\setminus D_0$, $\delta_D(x)\geq k-1$ y $|U|=k-1$, por lo que cada vértice de $D\setminus D_0$ puede ser adyacente a cada vértice de $U$, por lo que, $|D\setminus D_0|(k-1)$ es la cantidad máxima de aristas entre $U$ y $D\setminus D_0$ lo que justifica esta desigualdad.\\
+
+Sabemos que $\forall x \in D\setminus D_0$, tiene $\delta_{D'}(x)\geq k$, por lo que, cada vértice en $D\setminus D'$ puede ser tener como vecinos a todos los vértices del conjunto $U$, es decir, pueden haber a lo más $|D\setminus D_0|(k-1)$ aristas posibles. Lo anterior representa el lado izquierdo de la desigualdad y en la Figura 1, son las aristas de color verde. El lado derecho de la desigualdad son la suma de los grados de todos los vértices del conjunto $U$ sobre el conjunto $D\setminus D_0$, el cual queda acotado por $|D\setminus D_0|(k-1)$.\\
 
 Sumando las desiguadades $(1)$ y $(2)$, tenemos que:\\
 
 \begin{align*}
 \sum_{v\in D_0}\delta_{D'}(v)+|D\setminus D_0|(k-1)&\geq \sum_{i=1}^{k-1}\delta_{D_0}(u_i)+\sum_{i=1}^{k-1}\delta_{D\setminus D_0}(u_i)\\
-& =\sum_{i=1}^{k-1}\delta_{D}(u_i)\\
-&\geq k(k-1)\\
-\text{Despejando y cambiando signos tenemos}\\
--\sum_{v\in D_0}\delta_{D'}(v)&\leq |D\setminus D_0|(k-1)-k(k-1) \hspace{2cm} (3)
+& \geq \sum_{i=1}^{k-1}\delta_{D}(u_i)\\
+\Longrightarrow \sum_{v\in D_0}\delta_{D'}(v)+|D\setminus D_0|(k-1)&\geq k(k-1)\\
 \end{align*}
 
-La última desigualdad proviene de que el conjunto $D$ ya es $k$-dominante de $G$, así para cualquier vértice $u_i\in U$ debe tener al menos $k$ vecinos dentro de $D$ y como hay $k-1$ vértices en $U$, la suma total de aristas entre $D$ y $U$ debe de ser al menos $k(k-1)$.\\
+Como el conjunto $D$ ya es $k$-dominante de $G$, para cualquier vértice $u_i\in U$ debe tener al menos $k$ vecinos dentro de $D$ y como hay $k-1$ vértices en $U$, la suma total de aristas entre $D$ y $U$ debe de ser al menos $k(k-1)$.\\
 
-Ahora, definimos al conjunto $D''\subseteq V(G)$ como un conjunto de cardinalidad mínima entre todos los super conjuntos $W$ de $D'$ tales que $\delta_W(x)\geq k-1$ para todo $x \in D$, es decir, el conjunto $D''$ va a contener a todos los vértices de $D'$ que ya cumplen la definición necesaria de $k$-tupla y va "agregar" los vértices necesarios para que el resto de vértices de $D'$ cumplan la definición, los vértices de $D_0$.\\
 
-Buscamos que los vértices que están en $D_0$ puedan estar en $D''$, para esto suceda, se debe cumplir que, para cada $v\in D_0$, tiene al menos $k-1-\delta_{D'}(v)$ en $W\setminus D$, los vecinos que tiene cada vértice en $D_0$ en $U$ y los vértices fuera de $D$. Como $D"$ es un conjunto de cardinalidad mínima, tenemos la siguiente desigualdad:\\
+Despejamos a $\sum_{v\in D_0}\delta_{D'}(v)$ de la desigualdad
+
+\begin{align*}
+\Longrightarrow \sum_{v\in D_0}\delta_{D'}(v)\geq& |D\setminus D_0|(k-1) + k(k-1)\\
+\text{Multiplicamos por (-) e invertimos la desigualdad}\\
+\Longrightarrow -\sum_{v\in D_0}\delta_{D'}(v)\leq& |D\setminus D_0|(k-1)-k(k-1) \hspace{1cm} (3)
+\end{align*}
+%\newline
+
+
+Ahora, definimos al conjunto $D''\subseteq V(G)$ como un conjunto de cardinalidad mínima entre todos los super conjuntos $W$ de $D'$ tales que $\delta_W(x)\geq k-1$ para todo $x \in D$. Con la definición del conjunto $D''$, es fácil ver que, para todo vértice $x$ dentro del conjunto $D'\setminus D_0$ tiene $\delta_{D'}(x)\geq k-1$, por lo que, $x \in D''$. Solo resta ver que sucede con lo vértices en $D_0$.\\
+
+Sea $v\in D_0$. Sabemos que todos los vértices $v$ en $D$ tienen $\delta_W(v)\geq k-1$, particularmente, si $v\in D_0$, entonces, el vértice $v$ tiene al menos $k-1-\delta_{D'}(v)$ vecinos en $(W\setminus D')\subseteq (W\setminus D)$, como esto es para cada vértice de $D_0$, tenemos que a lo más son: $|D_0|(k-1)-\sum_{v\in D_0}\delta_{D'}(v)$ vecinos totales. (Falta hacer el dibujo y además hacer la aclaración escrita de como se ven estas aristas). \\
+De la misma forma, observamos que al contar los vecinos de cada $v\in D_0$, estos están en $D''\setminus D'$, por lo que, al sumar todos estos vecinos, son a lo menos $|D''\setminus D'|$ ya que $D''$ es de cardinalidad mínima.\\
+
+De lo anterior, tenemos la siguiente desigualdad:\\
 
 \begin{align*}
 |D''\setminus D'|&\leq |D_0|(k-1)-\sum_{v\in D_0}\delta_{D'}(v)\\
-\text{utilizando la desigualdad (3) tenemos}\\
-|D''\setminus D'|&\leq |D_0|(k-1)+|D\setminus D_0|(k-1)-k(k-1)\\
-|D''\setminus D'|&\leq (|D_0|+|D\setminus D_0|)(k-1)-k(k-1)\\
-|D''\setminus D'|&\leq (|D|)(k-1)-k(k-1)\\
+\text{Utilizando la desigualdad (3):}\\
+\Longrightarrow|D''\setminus D'|&\leq |D_0|(k-1)+|D\setminus D_0|(k-1)-k(k-1)\\
+\Longrightarrow|D''\setminus D'|&\leq (|D_0|+|D\setminus D_0|)(k-1)-k(k-1)\\
+\Longrightarrow|D''\setminus D'|&\leq (|D|)(k-1)-k(k-1) \hspace{1.5cm} (4)\\
 \end{align*}
 
-Ahora podemos ver que $D''$ es un conjunto $k$-tupla dominante de $G$, ya que cada vértice en $V(G)\setminus D$ es dominado $k$ veces por los vértices de $D\subseteq D''$ y por la construcción de $D''$, cada vértice en $D$ son dominados $k$ veces por vértices de $D''$Por último, recordemos las cardinalidades de $D''$ y de $D'$, $|D''|= |D'|+|D''\setminus D'|$ y $|D'|=|D|+k-1$ con la desigualdad que obtuvimos anteriormente, tenemos\\
+Por la definición del conjunto $D''$, para cada $x\in D$, $\delta_{D''}(x)\geq k-1$ y, como $D$ es $\gamma_k(G)$-dominante y $D\subset D''$, para cualquier $y\in V(G)\setminus D$, $\delta_{D''}\geq k$, entonces, esto es equivalente a, para todo vértice $x\in V(G)$, $\delta_{D''}(v)\geq k-1$, por lo tanto, $D''$ es un conjunto $k$-tupla domiante de $G$ y $\gamma_{xk}(G)\geq |D''|$. \\
+
+Por último, recordemos las cardinalidades de $D''$ $D'$ y posteriormente sus tituiremos estos valores sobre la desigualdad (4), $|D''|=|D'|+|D''\setminus D'|$ y $|D'|=|D|+k-1$, entonces: $|D''\setminus D'|=|D''|-|D'|$\\
+
 
 \begin{align*}
-|D''|&\leq(|D|+k-1)+ |D|(k-1)-k(k-1)\\
-|D''|&\leq |D|+k-1+k|D|-|D|-k^2+k\\
-|D''|&\leq k|D|-k^2+2k-1\\
-|D''|&\leq k|D|-(k-1)^2\\
+|D''|-|D'|&\leq (|D|)(k-1)-k(k-1)\\
+\Longrightarrow |D''|&\leq |D'|+|D|(k-1)-k(k-1)\\
+\Longrightarrow|D''|&\leq|D|+k-1+ |D|(k-1)-k(k-1)\\
+\Longrightarrow|D''|&\leq |D|+k-1+k|D|-|D|-k^2+k\\
+\Longrightarrow|D''|&\leq k|D|-k^2+2k-1\\
+\Longrightarrow|D''|&\leq k|D|-(k-1)^2\\
 \end{align*}
 
 Como $D$ es $\gamma_k(G)$-dominante y $D''$ es $k$-tupla dominante, podemos concluir que:\\
-$$\gamma_{xk}(G)\leq k\gamma_k(G)-(k-1)^2$$ \newline
+$$\gamma_{xk}(G)\leq k\gamma_k(G)-(k-1)^2 $$  \newline
+Lo que termina la prueba. $\hspace{7.5cm}\qed$\\
+%$\blacksquare$
 
 
 El siguiente resultado muestra una nueva cota superior para el número de $k$-tupla dominación de una gráfica $G$, en términos de $k$-tupla dominación y $k'$-tupla dominación con $k \in \{1, ..., k-1\}$.\\
